@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<div class="armor_list" th:fragment="armor_list">
+    <div th:switch="${armorlist.size}">
+        <h2 th:case="0">Броня не найдена</h2>
+        <div th:case="*" style="overflow-y: scroll; height: 80vh">
+            <table class="table table-secondary table-striped">
+                <colgroup>
+                    <col span="4" style="width: 15%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Защита</th>
+                    <th scope="col">Тип</th>
+                    <th scope="col">Место</th>
+                    <th scope="col">Вес</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="armor, iStat : ${armorlist}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'"
+                    th:object="${armor}">
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{defense}"></td>
+                    <td th:text="*{armorType.equipmentType}"></td>
+                    <td th:text="*{armorBodyPlace.place}"></td>
+                    <td th:text="*{weight}"></td>
+                    <td th:text="*{cost}"></td>
+                    <td>
+                        <button th:href="@{addarmorowner/(pid=*{pid})}"
+                           class="btn btn-secondary" onclick="addArmorOwner(event)" disabled="true" th:text="'Экипировать'"></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

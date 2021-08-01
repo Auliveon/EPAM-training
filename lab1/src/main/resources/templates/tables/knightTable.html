@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<div class="knight_list" th:fragment="knight_list">
+    <div th:switch="${knightlist.size}">
+        <h2 th:case="0">Рыцари не найдены</h2>
+        <div class="" th:case="*" style="overflow-y: scroll; height: 40vh">
+            <table class="table table-secondary table-striped">
+                <colgroup>
+                    <col span="4" style="width: 15%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col-4">Имя</th>
+                    <th scope="col-4">Возраст</th>
+                    <th scope="col-4">Баланс</th>
+                    <th scope="col-4">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="knight, iStat : ${knightlist}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'"
+                    th:object="${knight}">
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{age}"></td>
+                    <td th:text="*{balance}"></td>
+                    <td><a th:variable="*{pid}" th:href="@{getallowneditemsbyknight(pid=*{pid})}" onclick="getOwnedEquipment(event)" class="btn btn-secondary">Инвентарь</a> </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

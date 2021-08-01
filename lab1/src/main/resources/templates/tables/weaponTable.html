@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<div class="wepon_list" th:fragment="weapon_list">
+    <div th:switch="${weaponlist.size}">
+        <h2 th:case="0">Оружие не найдено</h2>
+        <div th:case="*" style="overflow-y: scroll; height: 80vh">
+            <table class="table table-secondary table-striped">
+                <colgroup>
+                    <col span="4" style="width: 15%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Урон</th>
+                    <th scope="col">Тип</th>
+                    <th scope="col">Вес</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="weapon, iStat : ${weaponlist}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'"
+                    th:object="${weapon}">
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{damage}"></td>
+                    <td th:text="*{weaponType.equipmentType}"></td>
+                    <td th:text="*{weight}"></td>
+                    <td th:text="*{cost}"></td>
+                    <td>
+                        <button th:href="@{addweaponowner/(pid=*{pid})}"
+                           class="btn btn-secondary" onclick="addWeaponOwner(event)" disabled="true" th:text="'Экипировать'"></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

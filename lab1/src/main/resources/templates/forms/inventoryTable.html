@@ -1,0 +1,60 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<div th:switch="${knightName}" class="inventory_form" th:fragment="inventory_form">
+
+    <div th:case="null" class="col-3"></div>
+    <div th:case="*" class="row">
+        <div class="col-3">
+            <div class="col-12">
+                <text th:text="'Имя: ' + ${knightName}"></text>
+            </div>
+            <div class="col-12">
+                <text th:text="'Защита: ' + ${defense}"></text>
+            </div>
+            <div class="col-12">
+                <text th:text="'Урон: ' + ${damage}"></text>
+            </div>
+            <div class="col-12">
+                <text th:text="'Стоимость снаряжения: ' + ${equipCost}"></text>
+            </div>
+
+            <div class="col-12">
+                <text th:text="'Вес экипировки: ' + ${weight}"></text>
+            </div>
+
+            <div class="col-12">
+                <text th:text="'Баланс: ' + ${balance}"></text>
+            </div>
+
+        </div>
+        <div class="col-9" th:switch="${equipmentlist}">
+            <h2 th:case="0"></h2>
+            <div class="" th:case="*" style="overflow-y: scroll; height: 43.2vh">
+                <table class="table table-secondary table-striped">
+                    <thead>
+                    <tr class="">
+                        <th scope="col">Название</th>
+                        <th scope="col">Стоимость</th>
+                        <th scope="col">Тип</th>
+                        <th scope="col">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="equipment, iStat : ${equipmentlist}"
+                        th:style="${iStat.odd}? 'font-weight: bold;'"
+                        th:alt-title="${iStat.even}? 'even' : 'odd'"
+                        th:with="class=*{class.name}"
+                        th:object="${equipment}">
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{cost}"></td>
+                        <td th:text="${#strings.contains(class, 'Armor')? 'Armor':'Weapon'}"></td>
+                        <td>
+                            <a th:href="@{removeowner/(pid=*{pid}, class=${#strings.contains(class, 'Armor')? 'Armor':'Weapon'}, )}"
+                               class="btn btn-secondary" onclick="removeOwner(event)" th:text="X"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
